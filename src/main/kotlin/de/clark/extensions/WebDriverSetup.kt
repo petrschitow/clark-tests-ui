@@ -87,7 +87,7 @@ class WebDriverSetup() {
         logger.info("Scrolled to element with class [${webelement.getClass()}")
     }
 
-    fun noveToElement(webelement: WebElementImpl): WebElementImpl{
+    fun moveToElement(webelement: WebElementImpl): WebElementImpl{
         Actions(webDriver).moveToElement(webelement.webElement).build().perform()
         logger.info("Cursor moved to class=[${webelement.getClass()}]")
         return webelement

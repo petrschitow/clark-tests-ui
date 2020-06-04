@@ -10,8 +10,8 @@ import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
-abstract class BasePage (val webDriverSetup: WebDriverSetup){
-    companion object: Log(){}
+abstract class BasePage(val webDriverSetup: WebDriverSetup) {
+    companion object : Log() {}
 
     val webDriver = webDriverSetup.webDriver
 
@@ -19,18 +19,18 @@ abstract class BasePage (val webDriverSetup: WebDriverSetup){
         PageFactory.initElements(webDriver, this)
     }
 
-    fun openPage(url: String){
+    fun openPage(url: String) {
         webDriverSetup.get(url)
     }
 
-    fun waitPageIsLoaded(timeout: Long = TIMEOUT){
-        WebDriverWait(webDriver, timeout).until{
+    fun waitPageIsLoaded(timeout: Long = TIMEOUT) {
+        WebDriverWait(webDriver, timeout).until {
             (webDriver as JavascriptExecutor).executeScript("return document.readyState") == "complete"
         }
         logger.info("Page ${webDriver.currentUrl} has been loaded")
     }
 
-    fun waitElementIsVisible(by: By, timeout: Long= TIMEOUT): WebElementImpl{
+    fun waitElementIsVisible(by: By, timeout: Long = TIMEOUT): WebElementImpl {
         WebDriverWait(webDriver, timeout).until {
             ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(by))
         }
@@ -38,23 +38,22 @@ abstract class BasePage (val webDriverSetup: WebDriverSetup){
         return webDriverSetup.findElement(by)
     }
 
-    fun waitElementIsInvisible(by: By, timeout: Long= TIMEOUT){
+    fun waitElementIsInvisible(by: By, timeout: Long = TIMEOUT) {
         WebDriverWait(webDriver, timeout).until {
             checkElementInvisibility(by)
         }
     }
 
-    fun checkElementInvisibility(by: By): Boolean{
-        try{
+    fun checkElementInvisibility(by: By): Boolean {
+        try {
             webDriver.findElement(by)
-        }catch (e: NoSuchElementException){
+        } catch (e: NoSuchElementException) {
             logger.info("Element [$by] is invisible")
             return true
         }
         logger.info("Element [$by] is NOT invisible")
         return false
     }
-
 
 
 }

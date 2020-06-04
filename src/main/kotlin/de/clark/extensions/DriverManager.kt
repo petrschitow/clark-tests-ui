@@ -16,7 +16,13 @@ object DriverManager {
         return ChromeOptions().addArguments(
                 "--window-size=1920,1080",
                 "--no-sandbox",
-                "--disable-dev-shm-usage"
+                "--incognito"
         )
+    }
+
+    fun runWebDriver(): WebDriverSetup{
+        setChromeProperties()
+        val options = setChromeOptions()
+        return WebDriverSetup(options)
     }
 }
